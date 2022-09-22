@@ -1,0 +1,46 @@
+html{
+    background-color: #CACFD2;
+}
+h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: black;
+}
+.container{
+    color: black; 
+    size: 4; 
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+    text-align: center;
+}
+.button{
+    background-color: #9FE2BF;
+    height: 45px; 
+    width: 200px; 
+    color:black; 
+    font: oblique;
+    cursor: pointer;
+    text-decoration: none;
+}
+.button a{
+    text-decoration: none;
+    color: black;
+}
+.button a:hover{
+    text-decoration:solid;
+}
+.button2{
+    background: #40E0D0; 
+    height: 45px; 
+    width: 200px;
+    color:white; 
+    font: oblique;
+    cursor: pointer;
+}
+.button2 a{
+    text-decoration: none;
+    color: black;
+}
+.button2 a:hover{
+    text-decoration: underline;
+}
+

@@ -1,0 +1,52 @@
+html{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 4;
+    background-color: #CACFD2;
+}
+
+body{
+    align-items: center;
+    justify-content: center;
+}
+
+h1{
+    color: black;
+}
+
+.container{
+    color: black; 
+    size: 6; 
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+    text-align: center;
+}
+
+h2{
+    color: blue;
+}
+
+.fetch{
+    background-color: #9FE2BF; 
+    height: 45px; 
+    width: 200px; 
+    color:black; 
+    font:oblique;
+}
+
+.fetch a{
+    text-decoration: none;
+    color: black;
+}
+
+.fetch a:hover{
+    text-decoration: underline;
+}
+
+.back a{
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+}
+.back a:active{
+    color: red;
+}
