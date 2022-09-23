@@ -84,31 +84,36 @@ def AddEmp():
     return render_template('AddEmpOutput.html', name=emp_name)
 
 
-@app.route("/getamp", methods=['GET', 'POST'])
-def AddEmp():
+@app.route("/fetchdata", methods=['GET', 'POST'])
+def GetEmp():
+    '''
     emp_id = request.form['emp_id']
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     pri_skill = request.form['pri_skill']
     location = request.form['location']
     emp_image_file = request.files['emp_image_file']
+    '''
 
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
+    '''
     if emp_image_file.filename == "":
         return "Please select a file"
+    '''
 
     try:
 
-        cursor.execute(insert_sql, (emp_id, first_name,
-                       last_name, pri_skill, location))
+        emp_id, first_name, last_name, pri_skill, location = cursor.execute(
+            "SELECT * FROM employee")
         db_conn.commit()
+        '''
         emp_name = "" + first_name + " " + last_name
         # Uplaod image file in S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
 
+        
         try:
             print("Data inserted in MySQL RDS... uploading image to S3...")
             s3.Bucket(custombucket).put_object(
@@ -129,12 +134,13 @@ def AddEmp():
 
         except Exception as e:
             return str(e)
-
+        '''
     finally:
         cursor.close()
 
     print("all modification done...")
-    return render_template('AddEmpOutput.html', name=emp_name)
+    print("all modification done...")
+    return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location)
 
 
 @app.route("/delete", methods=['GET', 'DELETE'])
