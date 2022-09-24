@@ -26,9 +26,11 @@ def home():
     return render_template('Homepage.html')
 
 
+'''
 @app.route("/aboutcss", methods=['GET'])
 def homecss():
     return render_template('Homepage.css')
+'''
 
 
 @app.route("/goaddemp", methods=['GET'])
