@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from pymysql import connections
 import os
 import boto3
+import base64
 from config import *
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -72,6 +73,10 @@ def about():
             response = s3.get_object(
                 Bucket=bucket_location, Key=emp_image_file_name_in_s3_1)
             img1 = response['Body'].read()
+            img1 = {
+                "body": base64.b64encode(img1),
+                "isBase64Encoded": True
+            }
 
             img2 = s3.get_object(
                 Bucket=bucket_location, Key=emp_image_file_name_in_s3_2)
