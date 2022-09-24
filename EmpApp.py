@@ -65,6 +65,12 @@ def GoAboutUs():
 # start about us
 @app.route("/aboutus", methods=['POST'])
 def about():
+    return render_template('AboutUs.html')
+
+
+'''
+@app.route("/aboutus", methods=['POST'])
+def about():
     s3 = boto3.resource('s3')
 
     try:
@@ -84,9 +90,11 @@ def about():
         return str(e)
 
     return render_template('AboutUs.html', image_url1=object_url1, image_url2=object_url2)
-
+'''
 
 # start add emp
+
+
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['emp_id']
