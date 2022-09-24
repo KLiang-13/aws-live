@@ -56,7 +56,7 @@ def GoDeleteEmp():
 # navigate to about us
 
 
-@app.route("/aboutus", methods=['GET', 'POST'])
+@app.route("/aboutus", methods=['GET'])
 def about():
     try:
         # Fetch image file from S3 #
@@ -74,20 +74,24 @@ def about():
                 's3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint'])
 
+            '''
             if s3_location is None:
                 s3_location = ''
             else:
                 s3_location = '-' + s3_location
-            '''
+            
             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
                 s3_location,
                 custombucket,
                 emp_image_file_name_in_s3)
             '''
-            img1 = s3.Bucket(custombucket).get_object(
+            response = s3.Bucket(custombucket).get_object(
                 Bucket=custombucket, Key=emp_image_file_name_in_s3_1)
+            img1 = response['Body'].read()
+
             img2 = s3.Bucket(custombucket).get_object(
                 Bucket=custombucket, Key=emp_image_file_name_in_s3_2)
+            img2 = response['Body'].read()
 
         except Exception as e:
             return str(e)
