@@ -62,7 +62,7 @@ def about():
         # Fetch image file from S3 #
         emp_image_file_name_in_s3_1 = "emp-id-" + "666" + "_image_file"
         emp_image_file_name_in_s3_2 = "emp-id-" + "777" + "_image_file"
-        s3 = boto3.resource('s3')
+        s3 = boto3.client('s3')
 
         try:
             bucket_location = boto3.client(
