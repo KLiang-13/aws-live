@@ -81,6 +81,11 @@ def about():
 
             img2 = s3.get_object(
                 Bucket=bucket_location, Key=emp_image_file_name_in_s3_2)
+
+            img2 = {
+                "body": base64.b64encode(),
+                "isBase64Encoded": True
+            }
             img2 = response['Body'].read()
 
         except Exception as e:
