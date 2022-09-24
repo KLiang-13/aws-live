@@ -25,29 +25,80 @@ table = 'employee'
 def home():
     return render_template('Homepage.html')
 
-
-'''
-@app.route("/aboutcss", methods=['GET'])
-def homecss():
-    return render_template('Homepage.css')
-'''
+# navigate to add emp
 
 
 @app.route("/goaddemp", methods=['GET'])
 def GoAddEmp():
     return render_template('AddEmp.html')
 
+# navigate to get emp
+
+
+@app.route("/gogetemp", methods=['GET'])
+def GoGetEmp():
+    return render_template('GetEmp.html')
+
+# navigate to update emp
+
+
+@app.route("/goupdateemp", methods=['GET'])
+def GoUpdateEmp():
+    return render_template('UpdateEmp.html')
+
+# navigate to delete emp
+
+
+@app.route("/godeleteemp", methods=['GET'])
+def GoDeleteEmp():
+    return render_template('DeleteEmp.html')
+
+# navigate to about us
+
 
 @app.route("/aboutus", methods=['GET', 'POST'])
 def about():
-    return render_template('AboutUs.html')
+    try:
+        # Fetch image file from S3 #
+        emp_image_file_name_in_s3_1 = "emp-id-" + "666" + "_image_file"
+        emp_image_file_name_in_s3_2 = "emp-id-" + "777" + "_image_file"
+        s3 = boto3.resource('s3')
+
+        try:
+            '''
+            print("Data inserted in MySQL RDS... uploading image to S3...")
+            s3.Bucket(custombucket).put_object(
+                Key=emp_image_file_name_in_s3, Body=emp_image_file)
+            '''
+            bucket_location = boto3.client(
+                's3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+            '''
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                emp_image_file_name_in_s3)
+            '''
+            img1 = s3.Bucket(custombucket).get_object(
+                Bucket=custombucket, Key=emp_image_file_name_in_s3_1)
+            img2 = s3.Bucket(custombucket).get_object(
+                Bucket=custombucket, Key=emp_image_file_name_in_s3_2)
+
+        except Exception as e:
+            return str(e)
+
+    except Exception as e:
+        return str(e)
+
+    return render_template('AboutUs.html', image_url1=img1, image_url2=img2)
 
 
-@app.route("/aboutcss", methods=['GET'])
-def aboutcss():
-    return render_template('AboutUs.css')
-
-
+# start add emp
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['emp_id']
@@ -101,6 +152,7 @@ def AddEmp():
     return render_template('AddEmpOutput.html', name=emp_name)
 
 
+# start get emp
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
     # Get user's input from webpage
@@ -162,6 +214,7 @@ def GetEmp():
     return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=img)
 
 
+# start fetch & delete
 @app.route("/delete", methods=['GET', 'DELETE'])
 def delete():
     return render_template('DelEmp.html')
