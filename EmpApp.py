@@ -57,36 +57,26 @@ def GoDeleteEmp():
 # navigate to about us
 
 
-@app.route("/aboutus", methods=['GET'])
+@app.route("/aboutus", methods=['POST'])
 def about():
     try:
         # Fetch image file from S3 #
         emp_image_file_name_in_s3_1 = "emp-id-" + "666" + "_image_file"
         emp_image_file_name_in_s3_2 = "emp-id-" + "777" + "_image_file"
-        s3 = boto3.client('s3')
+        s3 = boto3.resource('s3')
 
         try:
             bucket_location = boto3.client(
                 's3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint'])
 
-            response = s3.get_object(
-                Bucket=bucket_location, Key=emp_image_file_name_in_s3_1)
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
 
-            img1 = {
-                "body": base64.b64encode(),
-                "isBase64Encoded": True
-            }
-            img1 = response['Body'].read()
-
-            img2 = s3.get_object(
-                Bucket=bucket_location, Key=emp_image_file_name_in_s3_2)
-
-            img2 = {
-                "body": base64.b64encode(),
-                "isBase64Encoded": True
-            }
-            img2 = response['Body'].read()
+            object_url1 = "https://angkuanliang-employee.s3.amazonaws.com/emp-id-666_image_file"
+            object_url2 = "https://angkuanliang-employee.s3.amazonaws.com/emp-id-777_image_file"
 
         except Exception as e:
             return str(e)
@@ -94,7 +84,7 @@ def about():
     except Exception as e:
         return str(e)
 
-    return render_template('AboutUs.html', image_url1=img1, image_url2=img2)
+    return render_template('AboutUs.html', image_url1=object_url1, image_url2=object_url2)
 
 
 # start add emp
@@ -152,7 +142,7 @@ def AddEmp():
 
 
 # start get emp
-@app.route("/fetchdata", methods=['GET'])
+@app.route("/fetchdata", methods=['GET', 'POST'])
 def GetEmp():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
@@ -198,9 +188,10 @@ def GetEmp():
                 s3_location,
                 custombucket,
                 emp_image_file_name_in_s3)
-
+            '''
             img = s3.Bucket(custombucket).get_object(
                 Bucket=custombucket, Key=emp_image_file_name_in_s3)
+            '''
 
         except Exception as e:
             return str(e)
@@ -210,7 +201,7 @@ def GetEmp():
 
     print("all modification done...")
     print("all fetching done...")
-    return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=img)
+    return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
 
 
 # start fetch & delete
