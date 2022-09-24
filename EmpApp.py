@@ -153,13 +153,13 @@ def AddEmp():
 
 
 # start get emp
-@app.route("/getemp", methods=['GET', 'POST'])
+@app.route("/fetchdata", methods=['GET'])
 def GetEmp():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
 
     # define sql query to be execute
-    read_sql = "SELECT * FROM 'employee' WHERE emp_id=%s"
+    read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
     # define a cursor to fetch
     cursor = db_conn.cursor()
 
