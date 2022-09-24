@@ -57,16 +57,12 @@ def GoDeleteEmp():
 # navigate to about us
 
 
-@app.route("/goaboutus", methods=['GET'])
+@app.route("/aboutus", methods=['GET'])
 def GoAboutUs():
     return render_template('AboutUs.html')
 
 
 # start about us
-@app.route("/aboutus", methods=['POST'])
-def about():
-    return render_template('AboutUs.html')
-
 
 '''
 @app.route("/aboutus", methods=['POST'])
