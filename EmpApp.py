@@ -161,7 +161,7 @@ def GetEmp():
         cursor.execute(read_sql, (emp_id))
 
         # fetch one row
-        result = cursor.fetchone
+        result = cursor.fetchone()
 
         # store result
         emp_id, first_name, last_name, pri_skill, location = result
