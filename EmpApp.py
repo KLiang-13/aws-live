@@ -145,7 +145,7 @@ def AddEmp():
 
 
 # start get emp
-@app.route("/fetchdata", methods=['GET', 'POST'])
+@app.route("/fetchdata", methods=['POST'])
 def GetEmp():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
