@@ -152,6 +152,7 @@ def GetEmp():
 
     # define sql query to be execute
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
+
     # define a cursor to fetch
     cursor = db_conn.cursor()
 
@@ -164,9 +165,6 @@ def GetEmp():
 
         # store result
         emp_id, first_name, last_name, pri_skill, location = result
-
-        # commit
-        db_conn.commit()
 
         # Fetch image file from S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
