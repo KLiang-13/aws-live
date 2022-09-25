@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from pymysql import connections
 import os
 import boto3
@@ -194,6 +194,8 @@ def GetEmp():
                 Bucket=custombucket, Key=emp_image_file_name_in_s3)
             '''
 
+            display_image(object_url)
+
         except Exception as e:
             return str(e)
 
@@ -206,7 +208,14 @@ def GetEmp():
     return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location)
 
 
+@app.route('/display/<filename>')
+def display_image(filename):
+    #print('display_image filename: ' + filename)
+    return redirect(url_for('static', filename), code=301)
+
 # start fetch & delete
+
+
 @app.route("/delete", methods=['GET', 'DELETE'])
 def delete():
     return render_template('DelEmp.html')
