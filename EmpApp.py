@@ -211,7 +211,7 @@ def GetEmp():
 @app.route('/display/<filename>')
 def display_image(filename):
     #print('display_image filename: ' + filename)
-    return redirect(url_for('static', filename), code=301)
+    return redirect(url_for(filename), code=301)
 
 # start fetch & delete
 
