@@ -204,7 +204,8 @@ def GetEmp():
 
     print("all modification done...")
     print("all fetching done...")
-    return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
+    # , image_url=object_url
+    return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location)
 
 
 # start fetch & delete
