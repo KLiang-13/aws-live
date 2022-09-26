@@ -283,7 +283,7 @@ def UdpEmp():
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
 
     # update old record
-    update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
+    update_sql = "UPDATE `employee` SET pri_skill='%s', location='%s' WHERE emp_id=%s"
 
     # define a cursor to fetch
     cursor = db_conn.cursor()
