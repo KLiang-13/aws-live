@@ -67,9 +67,9 @@ def GoAboutUs():
 
 @app.route("/aboutus", methods=['POST'])
 def about():
-    object_url1 = "https://angkuanliang-employee.s3.amazonaws.com/employee/emp-id-666_image_file"
+    object_url1 = "https://s3.amazonaws.com/angkuanliang-employee/emp-id-666_image_file"
 
-    object_url2 = "https://angkuanliang-employee.s3.amazonaws.com/employee/emp-id-777_image_file"
+    object_url2 = "https://s3.amazonaws.com/angkuanliang-employee/emp-id-777_image_file"
 
     return render_template('AboutUs.html', image_url1=object_url1, image_url2=object_url2)
 
