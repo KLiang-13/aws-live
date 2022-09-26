@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request
 from pymysql import connections
 import os
 import boto3
@@ -20,11 +20,6 @@ db_conn = connections.Connection(
 )
 output = {}
 table = 'employee'
-
-SECRET_KEY = "random key"
-SESSION_PERMANENT = False
-SESSION_TYPE = 'filesystem'
-session(app)
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -185,12 +180,16 @@ def GetEmp():
     return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
 
 
+# variable to store
+random_emp_id = 0
+
 # get update emp id
+
+
 @app.route("/updateolddata", methods=['POST'])
 def GetUdpEmp():
     emp_id = request.form['emp_id']
-    # ReadEmpID(emp_id)
-    session['id'] = 'emp_id'
+    random_emp_id = emp_id
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
     cursor = db_conn.cursor()
     try:
@@ -222,13 +221,6 @@ def GetUdpEmp():
     finally:
         cursor.close()
     return render_template('UpdateEmp.html', id=emp_id, fname=first_name, lname=last_name)
-
-
-'''
-def ReadEmpID(id):
-    emp_id = id
-    return emp_id
-'''
 
 
 def ReadEmp(emp_id):
@@ -283,7 +275,7 @@ def UdpEmp():
     new_location = request.form['location']
 
     #emp_id = 888
-    emp_id = session.get('id', None)
+    emp_id = random_emp_id
 
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
 
