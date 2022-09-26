@@ -348,7 +348,7 @@ def delete():
                 emp_image_file_name_in_s3)
 
             boto3.client('s3').delete_object(
-                bucket=custombucket, Key=emp_image_file_name_in_s3)
+                Bucket=custombucket, Key=emp_image_file_name_in_s3)
 
         except Exception as e:
             return str(e)
