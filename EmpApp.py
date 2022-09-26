@@ -194,7 +194,7 @@ def GetEmp():
                 Bucket=custombucket, Key=emp_image_file_name_in_s3)
             '''
 
-            display_image(object_url)
+            # display_image(object_url)
 
         except Exception as e:
             return str(e)
