@@ -186,6 +186,10 @@ def GetEmp():
 # get update emp id
 @app.route("/updateolddata", methods=['POST'])
 def GetUdpEmp():
+    return render_template('UpdateEmp.html')
+
+
+def ReadEmp():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
 
@@ -229,24 +233,17 @@ def GetUdpEmp():
 
     finally:
         cursor.close()
-        #UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url)
-
-    return render_template('UpdateEmp.html')
-    # , emp_id, first_name, last_name
-
+    return emp_id, first_name, last_name, pri_skill, location, object_url
 
 # start update emp
+
+
 @app.route("/udpemp", methods=['POST'])
 def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
-    emp_id = GetUdpEmp.__getattribute__('emp_id')
-    first_name = GetUdpEmp.__getattribute__('first_name')
-    last_name = GetUdpEmp.__getattribute__('last_name')
-    pri_skill = GetUdpEmp.__getattribute__('pri_skill')
-    location = GetUdpEmp.__getattribute__('location')
-    object_url = GetUdpEmp.__getattribute__('object_url')
+    emp_id, first_name, last_name, pri_skill, location, object_url = ReadEmp()
 
     # update old record
     update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
