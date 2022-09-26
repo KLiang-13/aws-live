@@ -314,7 +314,7 @@ def UdpEmp():
 
 
 # start fetch & delete
-@app.route("/deleteemp", methods=['DELETE'])
+@app.route("/deleteemp", methods=['POST'])
 def delete():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
