@@ -319,7 +319,7 @@ def delete():
     emp_id = request.form['emp_id']
 
     # delete old record
-    delete_sql = "DELETE FROM employee WHERE emp_id=%s"
+    delete_sql = "DELETE FROM `employee` WHERE emp_id=%s"
 
     # define a cursor to fetch
     cursor = db_conn.cursor()
@@ -328,6 +328,7 @@ def delete():
         # execute query
         cursor.execute(delete_sql, (emp_id))
 
+        '''
         # Fetch image file from S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
@@ -352,6 +353,7 @@ def delete():
 
         except Exception as e:
             return str(e)
+        '''
 
     finally:
         cursor.close()
