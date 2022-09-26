@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from pymysql import connections
 import os
 import boto3
@@ -184,6 +184,8 @@ def GetEmp():
 @app.route("/updateolddata", methods=['POST'])
 def GetUdpEmp():
     emp_id = request.form['emp_id']
+    # ReadEmpID(emp_id)
+    session['id'] = 'emp_id'
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
     cursor = db_conn.cursor()
     try:
@@ -215,6 +217,13 @@ def GetUdpEmp():
     finally:
         cursor.close()
     return render_template('UpdateEmp.html', id=emp_id, fname=first_name, lname=last_name)
+
+
+'''
+def ReadEmpID(id):
+    emp_id = id
+    return emp_id
+'''
 
 
 def ReadEmp(emp_id):
@@ -268,7 +277,8 @@ def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
-    emp_id = 888
+    #emp_id = 888
+    emp_id = session.get('id', None)
 
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
 
