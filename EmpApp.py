@@ -348,8 +348,8 @@ def delete():
                 custombucket,
                 emp_image_file_name_in_s3)
 
-            s3.delete_object(Bucket=custombucket,
-                             Key=emp_image_file_name_in_s3)
+            s3.Bucket(custombucket).delete_object(
+                Key=emp_image_file_name_in_s3)
 
         except Exception as e:
             return str(e)
