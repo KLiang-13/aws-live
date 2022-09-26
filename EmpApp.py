@@ -45,7 +45,7 @@ def GoGetEmp():
 
 @app.route("/goupdateemp", methods=['GET'])
 def GoUpdateEmp():
-    return render_template('UpdateEmp.html')
+    return render_template('SelectUpdateEmp.html')
 
 # navigate to delete emp
 
@@ -182,37 +182,27 @@ def GetEmp():
     #
     return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
 
+
 # get update emp id
-
-
 @app.route("/updateolddata", methods=['POST'])
 def GetUdpEmp():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
-    return UdpEmp(emp_id)
 
-# start update emp
-
-
-@app.route("/updateolddata", methods=['POST'])
-def UdpEmp(emp_id):
     # select old record
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
-
-    # delete old record
-    delete_sql = "DELETE FROM `employee` WHERE emp_id=%s"
 
     # define a cursor to fetch
     cursor = db_conn.cursor()
 
     try:
-        # execute read old record query
+        # execute query
         cursor.execute(read_sql, (emp_id))
 
         # fetch one row
         result = cursor.fetchone()
 
-        # store result into variables
+        # store result
         emp_id, first_name, last_name, pri_skill, location = result
 
         # Fetch image file from S3 #
@@ -237,15 +227,26 @@ def UdpEmp(emp_id):
         except Exception as e:
             return str(e)
 
-        try:
-            # execute read old record query
-            cursor.execute(delete_sql, (emp_id))
+    finally:
+        cursor.close()
+    return UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url)
 
-            s3.delete_object(Bucket=custombucket,
-                             Key=emp_image_file_name_in_s3)
 
-        except Exception as e:
-            return str(e)
+# start update emp
+@app.route("/udpemp", methods=['POST'])
+def UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url):
+    new_pri_skill = request.form['pri_skill']
+    new_location = request.form['location']
+
+    # update old record
+    update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
+
+    # define a cursor to fetch
+    cursor = db_conn.cursor()
+
+    try:
+        # execute read old record query
+        cursor.execute(update_sql, (new_pri_skill,new_location,emp_id))
 
     finally:
         cursor.close()
@@ -253,12 +254,23 @@ def UdpEmp(emp_id):
     print("all fetching done...")
     print("all updation done...")
     #
-    return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
+    return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=new_pri_skill, location=new_location, image_url=object_url)
 
 
 # start fetch & delete
 @app.route("/delete", methods=['GET', 'DELETE'])
 def delete():
+    '''
+    try:
+        # execute read old record query
+        cursor.execute(delete_sql, (emp_id))
+
+        s3.delete_object(Bucket=custombucket,
+                         Key=emp_image_file_name_in_s3)
+
+    except Exception as e:
+        return str(e)
+    '''
     return render_template('DelEmp.html')
 
 

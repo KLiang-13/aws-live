@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Update Employee Information</title>
+    <link rel="stylesheet" href="/static/AddEmp.css">
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <h1>Employee Database</h1>
+        <br>
+
+        <form action="/udpemp" autocomplete="on" method="POST" enctype="multipart/form-data">
+
+            Employee ID:<br> {{ id }} <br><br>
+
+            First Name:<br> {{ fname }} <br><br>
+
+            Last Name:<br> {{ lname }} <br><br>
+
+            Primary Skills:<br> <input style="height:25px;font-size:14pt;color:grey;" type="text"
+                name="pri_skill"><br><br>
+
+            Location:<br> <input style="height:25px;font-size:14pt;color:grey;" type="text" name="location"><br><br>
+
+            <!--
+            Image: <input type=file name="emp_image_file" style="height:25px;font-size:14pt;color:grey;"> <br><br>
+            -->
+
+            <button type="submit">UPDATE DATABASE</button>
+
+            <br><br>
+            <div class="back">
+                <a href="/">RETURN</a>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>

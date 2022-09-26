@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <br>
+    <title>New Employee Information</title><br>
+    <link rel="stylesheet" href="/static/GetEmp.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="color: blue">New Employee Information</h1>
+        <form>
+
+            <div>
+
+                Employee ID:<br> {{ id }} <br><br>
+
+                First Name:<br> {{ fname }} <br><br>
+
+                Last Name:<br> {{ lname }} <br><br>
+
+                Primary Interest:<br> {{ interest }} <br><br>
+
+                Location:<br> {{ location }} <br><br>
+
+
+                Image URL: <img src="{{ image_url }}">
+
+                <div class="back">
+                    <br><br><a href="/">RETURN</a>
+                </div>
+
+        </form>
+    </div>
+</body>
+
+</html>
