@@ -229,7 +229,9 @@ def GetUdpEmp():
 
     finally:
         cursor.close()
-    return UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url)
+        UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url)
+
+    return render_template('UpdateEmp.html', (emp_id, first_name, last_name, pri_skill, location, object_url))
 
 
 # start update emp
@@ -245,8 +247,14 @@ def UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url):
     cursor = db_conn.cursor()
 
     try:
+        if new_pri_skill == '':
+            new_pri_skill = pri_skill
+
+        if new_location == '':
+            new_location = location
+
         # execute read old record query
-        cursor.execute(update_sql, (new_pri_skill,new_location,emp_id))
+        cursor.execute(update_sql, (new_pri_skill, new_location, emp_id))
 
     finally:
         cursor.close()
