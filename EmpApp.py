@@ -231,7 +231,7 @@ def GetUdpEmp():
         cursor.close()
         #UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url)
 
-    return render_template('UpdateEmp.html', emp_id, first_name, last_name, pri_skill, location, object_url)
+    return render_template('UpdateEmp.html', emp_id, first_name, last_name)
 
 
 # start update emp
