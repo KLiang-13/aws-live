@@ -179,16 +179,12 @@ def GetEmp():
     return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
 
 
-# variable to store
-random_emp_id = 0
-
 # get update emp id
 
 
 @app.route("/updateolddata", methods=['POST'])
 def GetUdpEmp():
     emp_id = request.form['emp_id']
-    random_emp_id = emp_id
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
     cursor = db_conn.cursor()
     try:
@@ -273,18 +269,10 @@ def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
+    # how to pass?
     emp_id = 888
-    #emp_id = random_emp_id
 
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
-
-    '''
-    # delete old record
-    deletesql = "DELETE employee WHERE emp_id=%s"
-
-    # insert new record
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
-    '''
 
     # update old record
     update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
@@ -293,6 +281,8 @@ def UdpEmp():
     cursor = db_conn.cursor()
 
     try:
+        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
+        s3 = boto3.resource('s3')
 
         try:
             if new_pri_skill == '':
@@ -307,6 +297,20 @@ def UdpEmp():
             # commit to database, really make changes
             db_conn.commit()
 
+            bucket_location = boto3.client(
+                's3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                emp_image_file_name_in_s3)
+
         except Exception as e:
             return str(e)
 
@@ -315,8 +319,7 @@ def UdpEmp():
 
     print("all updation done...")
 
-    return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=new_pri_skill, location=new_location)
-    # , image_url=object_url)
+    return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=new_pri_skill, location=new_location, image_url=object_url)
 
 
 # start fetch & delete
