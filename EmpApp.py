@@ -286,14 +286,15 @@ def UdpEmp():
     cursor = db_conn.cursor()
     try:
         try:
+            '''
             if new_pri_skill == '':
                 new_pri_skill = pri_skill
 
             if new_location == '':
                 new_location = location
-
+            '''
             # execute read old record query
-            cursor.execute(update_sql, new_pri_skill, new_location, emp_id)
+            cursor.execute(update_sql, (new_pri_skill, new_location, emp_id))
         except Exception as e:
             return str(e)
     finally:
