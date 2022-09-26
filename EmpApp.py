@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 from pymysql import connections
 import os
 import boto3
-import base64
 from config import *
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -348,8 +347,8 @@ def delete():
                 custombucket,
                 emp_image_file_name_in_s3)
 
-            s3.Bucket(custombucket).delete_object(
-                Key=emp_image_file_name_in_s3)
+            boto3.client('s3').delete_object(
+                bucket=custombucket, Key=emp_image_file_name_in_s3)
 
         except Exception as e:
             return str(e)
