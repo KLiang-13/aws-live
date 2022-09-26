@@ -264,7 +264,7 @@ def ReadEmp():
 
     finally:
         cursor.close()
-    return emp_id, first_name, last_name, pri_skill, location, object_url
+    return result
 
 # start update emp
 
