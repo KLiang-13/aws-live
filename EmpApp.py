@@ -21,6 +21,11 @@ db_conn = connections.Connection(
 output = {}
 table = 'employee'
 
+SECRET_KEY = "random key"
+SESSION_PERMANENT = False
+SESSION_TYPE = 'filesystem'
+session(app)
+
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
