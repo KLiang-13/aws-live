@@ -327,6 +327,7 @@ def delete():
     try:
         # execute query
         cursor.execute(delete_sql, (emp_id))
+        db_conn.commit()
 
         '''
         # Fetch image file from S3 #
