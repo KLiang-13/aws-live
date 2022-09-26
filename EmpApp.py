@@ -274,8 +274,8 @@ def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
-    #emp_id = 888
-    emp_id = random_emp_id
+    emp_id = 888
+    #emp_id = random_emp_id
 
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
 
