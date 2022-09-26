@@ -278,36 +278,43 @@ def UdpEmp():
 
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
 
+    '''
     # delete old record
     deletesql = "DELETE employee WHERE emp_id=%s"
 
     # insert new record
     insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
+    '''
 
     # update old record
-    update_sql = "UPDATE employee SET pri_skill=%s, location=%s WHERE emp_id=%s"
+    update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
 
     # define a cursor to fetch
     cursor = db_conn.cursor()
+
     try:
+
         try:
-            '''
             if new_pri_skill == '':
                 new_pri_skill = pri_skill
 
             if new_location == '':
                 new_location = location
-            '''
+
             # execute read old record query
             cursor.execute(update_sql, (new_pri_skill, new_location, emp_id))
+
+            # commit to database, really make changes
+            db_conn.commit()
+
         except Exception as e:
             return str(e)
+
     finally:
         cursor.close()
 
-    print("all fetching done...")
     print("all updation done...")
-    #
+
     return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=new_pri_skill, location=new_location)
     # , image_url=object_url)
 
@@ -327,9 +334,10 @@ def delete():
     try:
         # execute query
         cursor.execute(delete_sql, (emp_id))
+
+        # commit to database, really make changes
         db_conn.commit()
 
-        '''
         # Fetch image file from S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
@@ -354,7 +362,6 @@ def delete():
 
         except Exception as e:
             return str(e)
-        '''
 
     finally:
         cursor.close()
