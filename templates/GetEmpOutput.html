@@ -24,9 +24,13 @@
 
 				Location:<br> {{ location }} <br><br>
 
+				<!--
 				{% if filename %}
 				<img src="{{ url_for('display_image', filename=filename) }}">
 				{% endif %}
+				-->
+
+				Image URL: <img src="{{ image_url }}">
 
 				Image URL: <br> {{ image_url }} <br><br>
 

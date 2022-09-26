@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Update Employee Information</title>
+    <link rel="stylesheet" href="/static/GetEmp.css">
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <h1>Employee Information</h1>
+        <br>
+
+        <form action="/fetchdata" autocomplete="on" method="POST">
+
+            <h2>Enter Employee ID</h2>
+
+            Employee ID:<br> <input style="height:25px;font-size:14pt;" type="number" name="emp_id" autofocus
+                size="40"><br><br><br>
+            <!-- <a href="/GetEmpOutput.html"> -->
+            <button type="submit">FETCH INFO</button><br><br><br>
+
+            <!-- formaction="http://3.134.115.108:80/" -->
+            <!--
+			<button type="submit" formaction="/goupdateemp"
+				style="background: white	; height: 45px; width: 200px; color: black; size: 5; font:oblique;"
+				method="GET">GO TO UPDATE DATABASE PAGE</button>
+			-->
+        </form>
+
+        <div class="back">
+            <br><br><a href="/">RETURN</a>
+        </div>
+</body>
+
+</html>
