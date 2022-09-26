@@ -64,29 +64,15 @@ def GoAboutUs():
 
 # start about us
 
-'''
+
 @app.route("/aboutus", methods=['POST'])
 def about():
-    s3 = boto3.resource('s3')
+    object_url1 = "https://angkuanliang-employee.s3.amazonaws.com/emp-id-666_image_file"
 
-    try:
-        bucket_location = boto3.client(
-            's3').get_bucket_location(Bucket=custombucket)
-        s3_location = (bucket_location['LocationConstraint'])
-
-        if s3_location is None:
-            s3_location = ''
-        else:
-            s3_location = '-' + s3_location
-
-        object_url1 = "https://angkuanliang-employee.s3.amazonaws.com/emp-id-666_image_file"
-        object_url2 = "https://angkuanliang-employee.s3.amazonaws.com/emp-id-777_image_file"
-
-    except Exception as e:
-        return str(e)
+    object_url2 = "https://angkuanliang-employee.s3.amazonaws.com/emp-id-777_image_file"
 
     return render_template('AboutUs.html', image_url1=object_url1, image_url2=object_url2)
-'''
+
 
 # start add emp
 
@@ -171,11 +157,6 @@ def GetEmp():
         s3 = boto3.resource('s3')
 
         try:
-            '''
-            print("Data inserted in MySQL RDS... uploading image to S3...")
-            s3.Bucket(custombucket).put_object(
-                Key=emp_image_file_name_in_s3, Body=emp_image_file)
-            '''
             bucket_location = boto3.client(
                 's3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint'])
@@ -189,12 +170,6 @@ def GetEmp():
                 s3_location,
                 custombucket,
                 emp_image_file_name_in_s3)
-            '''
-            img = s3.Bucket(custombucket).get_object(
-                Bucket=custombucket, Key=emp_image_file_name_in_s3)
-            '''
-
-            # display_image(object_url)
 
         except Exception as e:
             return str(e)
@@ -207,17 +182,81 @@ def GetEmp():
     #
     return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
 
+# get update emp id
 
-'''
-@app.route('/display/<filename>')
-def display_image(filename):
-    #print('display_image filename: ' + filename)
-    return redirect(url_for(filename), code=301)
-'''
+
+@app.route("/updateolddata", methods=['POST'])
+def GetUdpEmp():
+    # Get user's input from webpage
+    emp_id = request.form['emp_id']
+    return UdpEmp(emp_id)
+
+# start update emp
+
+
+@app.route("/updateolddata", methods=['POST'])
+def UdpEmp(emp_id):
+    # select old record
+    read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
+
+    # delete old record
+    delete_sql = "DELETE FROM `employee` WHERE emp_id=%s"
+
+    # define a cursor to fetch
+    cursor = db_conn.cursor()
+
+    try:
+        # execute read old record query
+        cursor.execute(read_sql, (emp_id))
+
+        # fetch one row
+        result = cursor.fetchone()
+
+        # store result into variables
+        emp_id, first_name, last_name, pri_skill, location = result
+
+        # Fetch image file from S3 #
+        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
+        s3 = boto3.resource('s3')
+
+        try:
+            bucket_location = boto3.client(
+                's3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                emp_image_file_name_in_s3)
+
+        except Exception as e:
+            return str(e)
+
+        try:
+            # execute read old record query
+            cursor.execute(delete_sql, (emp_id))
+
+            s3.delete_object(Bucket=custombucket,
+                             Key=emp_image_file_name_in_s3)
+
+        except Exception as e:
+            return str(e)
+
+    finally:
+        cursor.close()
+
+    print("all fetching done...")
+    print("all updation done...")
+    #
+    return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
+
 
 # start fetch & delete
-
-
 @app.route("/delete", methods=['GET', 'DELETE'])
 def delete():
     return render_template('DelEmp.html')
