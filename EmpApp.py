@@ -320,7 +320,7 @@ def delete():
     emp_id = request.form['emp_id']
 
     # delete old record
-    delete_sql = "DELETE employee WHERE emp_id=%s"
+    delete_sql = "DELETE FROM employee WHERE emp_id=%s"
 
     # define a cursor to fetch
     cursor = db_conn.cursor()
