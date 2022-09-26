@@ -220,10 +220,7 @@ def GetUdpEmp():
     return render_template('UpdateEmp.html', id=emp_id, fname=first_name, lname=last_name)
 
 
-def ReadEmp():
-    # Get user's input from webpage
-    emp_id = request.form['emp_id']
-
+def ReadEmp(emp_id):
     # select old record
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
 
@@ -274,7 +271,8 @@ def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
-    emp_id, first_name, last_name, pri_skill, location, object_url = ReadEmp()
+    emp_id = request.form['id']
+    ReadEmp(emp_id)
 
     # update old record
     update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
