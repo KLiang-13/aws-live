@@ -204,14 +204,16 @@ def GetEmp():
 
     print("all modification done...")
     print("all fetching done...")
-    # , image_url=object_url
-    return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location)
+    #
+    return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
 
 
+'''
 @app.route('/display/<filename>')
 def display_image(filename):
     #print('display_image filename: ' + filename)
     return redirect(url_for(filename), code=301)
+'''
 
 # start fetch & delete
 
