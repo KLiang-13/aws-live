@@ -229,16 +229,19 @@ def GetUdpEmp():
 
     finally:
         cursor.close()
-        UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url)
+        #UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url)
 
     return render_template('UpdateEmp.html', (emp_id, first_name, last_name, pri_skill, location, object_url))
 
 
 # start update emp
 @app.route("/udpemp", methods=['POST'])
-def UdpEmp(emp_id, first_name, last_name, pri_skill, location, object_url):
+def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
+
+    pri_skill = GetUdpEmp.__getattribute__(pri_skill)
+    new_location = GetUdpEmp.__getattribute__(new_location)
 
     # update old record
     update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
