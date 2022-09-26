@@ -67,9 +67,24 @@ def GoAboutUs():
 
 @app.route("/aboutus", methods=['POST'])
 def about():
-    object_url1 = "https://s3.amazonaws.com/angkuanliang-employee/emp-id-666_image_file"
+    s3 = boto3.resource('s3')
 
-    object_url2 = "https://s3.amazonaws.com/angkuanliang-employee/emp-id-777_image_file"
+    try:
+        bucket_location = boto3.client(
+            's3').get_bucket_location(Bucket=custombucket)
+        s3_location = (bucket_location['LocationConstraint'])
+
+        if s3_location is None:
+            s3_location = ''
+        else:
+            s3_location = '-' + s3_location
+
+        object_url1 = "https://s3.amazonaws.com/angkuanliang-employee/emp-id-666_image_file"
+
+        object_url2 = "https://s3.amazonaws.com/angkuanliang-employee/emp-id-777_image_file"
+
+    except Exception as e:
+        return str(e)
 
     return render_template('AboutUs.html', image_url1=object_url1, image_url2=object_url2)
 
