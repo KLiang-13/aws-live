@@ -274,10 +274,16 @@ def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
-    emp_id = 888
+    emp_id = 666
     #emp_id = random_emp_id
 
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
+
+    # delete old record
+    deletesql = "DELETE employee WHERE emp_id=%s"
+
+    # insert new record
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
 
     # update old record
     update_sql = "UPDATE employee SET pri_skill=%s, location=%s WHERE emp_id=%s"
@@ -308,20 +314,52 @@ def UdpEmp():
 
 
 # start fetch & delete
-@app.route("/delete", methods=['GET', 'DELETE'])
+@app.route("/deleteemp", methods=['POST', 'DELETE'])
 def delete():
-    '''
+    # Get user's input from webpage
+    emp_id = request.form['emp_id']
+
+    # delete old record
+    delete_sql = "DELETE employee WHERE emp_id=%s"
+
+    # define a cursor to fetch
+    cursor = db_conn.cursor()
+
     try:
-        # execute read old record query
+        # execute query
         cursor.execute(delete_sql, (emp_id))
 
-        s3.delete_object(Bucket=custombucket,
-                         Key=emp_image_file_name_in_s3)
+        # Fetch image file from S3 #
+        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
+        s3 = boto3.resource('s3')
 
-    except Exception as e:
-        return str(e)
-    '''
-    return render_template('DelEmp.html')
+        try:
+            bucket_location = boto3.client(
+                's3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                emp_image_file_name_in_s3)
+
+            s3.delete_object(Bucket=custombucket,
+                             Key=emp_image_file_name_in_s3)
+
+        except Exception as e:
+            return str(e)
+
+    finally:
+        cursor.close()
+
+    print("all deletion done...")
+
+    return render_template('DelEmpOutput.html', id=emp_id)
 
 
 if __name__ == '__main__':
