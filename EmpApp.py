@@ -261,18 +261,17 @@ def ReadEmp(emp_id):
 
     finally:
         cursor.close()
-    return result
+    return result  # not include url
 
 # start update emp
 
 
 @app.route("/udpemp", methods=['POST'])
-def UdpEmp():
+def UdpEmp(emp_id):
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
-    emp_id = request.form['id']
-    ReadEmp(emp_id)
+    emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
 
     # update old record
     update_sql = "UPDATE `employee` SET pri_skill=%s, location=%s WHERE emp_id=%s"
@@ -296,7 +295,8 @@ def UdpEmp():
     print("all fetching done...")
     print("all updation done...")
     #
-    return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=new_pri_skill, location=new_location, image_url=object_url)
+    return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=new_pri_skill, location=new_location)
+    # , image_url=object_url)
 
 
 # start fetch & delete
