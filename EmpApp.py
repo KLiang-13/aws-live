@@ -155,8 +155,11 @@ def GetEmp():
         # fetch one row
         result = cursor.fetchone()
 
-        # store result
-        emp_id, first_name, last_name, pri_skill, location = result
+        try:
+            # store result
+            emp_id, first_name, last_name, pri_skill, location = result
+        except:
+            return render_template('Error.html')
 
         # Fetch image file from S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
