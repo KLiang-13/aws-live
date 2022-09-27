@@ -201,7 +201,11 @@ def GetUdpEmp():
     try:
         cursor.execute(read_sql, (emp_id))
         result = cursor.fetchone()
-        emp_id, first_name, last_name, pri_skill, location = result
+        try:
+            # store result
+            emp_id, first_name, last_name, pri_skill, location = result
+        except:
+            return render_template('Error.html')
 
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
