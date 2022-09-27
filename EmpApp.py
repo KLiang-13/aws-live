@@ -67,8 +67,6 @@ def GoAboutUs():
 @app.route("/aboutus", methods=['POST'])
 def about():
     return render_template('AboutUs.html')
-    # , image_url1=object_url1, image_url2=object_url2)
-
 
 # start add emp
 
@@ -92,8 +90,11 @@ def AddEmp():
 
         cursor.execute(insert_sql, (emp_id, first_name,
                        last_name, pri_skill, location))
+
         db_conn.commit()
+
         emp_name = "" + first_name + " " + last_name
+
         # Upload image file in S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
@@ -173,9 +174,7 @@ def GetEmp():
     finally:
         cursor.close()
 
-    print("all modification done...")
     print("all fetching done...")
-    #
     return render_template('GetEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=pri_skill, location=location, image_url=object_url)
 
 
@@ -322,7 +321,7 @@ def UdpEmp():
     return render_template('UpdateEmpOutput.html', id=emp_id, fname=first_name, lname=last_name, interest=new_pri_skill, location=new_location, image_url=object_url)
 
 
-# start fetch & delete
+# start delete
 @app.route("/deleteemp", methods=['POST'])
 def delete():
     # Get user's input from webpage
