@@ -72,7 +72,7 @@ def about():
 # go error page
 
 
-@app.route("/error", methods=['GET'])
+#@app.route("/error", methods=['GET'])
 def Error():
     return render_template('Error.html')
 
