@@ -284,8 +284,7 @@ def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
 
-    # how to pass?
-    emp_id = 888
+    emp_id = 1004
 
     emp_id, first_name, last_name, pri_skill, location = ReadEmp(emp_id)
 
