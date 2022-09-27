@@ -64,7 +64,7 @@ def GoAboutUs():
 # start about us
 
 
-@app.route("/aboutus", methods=['POST'])
+@app.route("/aboutus", methods=['GET'])
 def about():
     return render_template('AboutUs.html')
 
@@ -72,7 +72,7 @@ def about():
 # go error page
 
 
-@app.route("/error", methods=['POST'])
+@app.route("/error", methods=['GET'])
 def Error():
     return render_template('Error.html')
 
