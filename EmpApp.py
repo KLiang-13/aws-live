@@ -68,6 +68,15 @@ def GoAboutUs():
 def about():
     return render_template('AboutUs.html')
 
+
+# go error page
+
+
+@app.route("/error", methods=['POST'])
+def Error():
+    return render_template('Error.html')
+
+
 # start add emp
 
 
