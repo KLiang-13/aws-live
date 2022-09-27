@@ -3,13 +3,13 @@
 
 <head>
 	<title>Add Employee Information</title>
-	<link rel="stylesheet" href="/static/AddEmp.css">
+	<link rel="stylesheet" href="../static/AddEmp.css">
 </head>
 
 <body>
 	<div class="container">
 		<br>
-		<h1>Employee Database</h1>
+		<h1>Add New Employee</h1>
 		<br>
 
 		<form action="/addemp" autocomplete="on" method="POST" enctype="multipart/form-data">
@@ -30,7 +30,14 @@
 
 			Image: <input type=file name="emp_image_file" style="height:25px;font-size:14pt;color:grey;"> <br><br>
 
-			<button type="submit">UPDATE DATABASE</button>
+			<button type="submit" 
+			style="background-color: #CCFF99;
+			height: 45px; 
+			width: 200px; 
+			color:black; 
+			font: oblique;
+			cursor: pointer;
+			text-decoration: none;">ADD EMPLOYEE</button>
 
 			<br><br>
 			<div class="back">

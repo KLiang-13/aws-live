@@ -1,7 +1,7 @@
 html{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 4;
-    background-color: #CACFD2;
+    background: #CCCCFF;
 }
 
 body{
@@ -25,14 +25,6 @@ h2{
     color: blue;
 }
 
-.fetch{
-    background-color: #9FE2BF; 
-    height: 45px; 
-    width: 200px; 
-    color:black; 
-    font:oblique;
-}
-
 .fetch a{
     text-decoration: none;
     color: black;
@@ -50,3 +42,12 @@ h2{
 .back a:active{
     color: red;
 }
+img{
+    border-radius: 8px;
+    size: auto;
+    max-width: 150px;
+    border: 1px solid;
+}
+img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }

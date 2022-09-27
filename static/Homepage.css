@@ -1,5 +1,6 @@
 html{
-    background-color: #CACFD2;
+    background: linear-gradient(120deg,#2980b9, #8e44ad);
+    animation: gradient 15s ease infinite;
 }
 h1{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

@@ -61,6 +61,11 @@ body {
     width: 100%;
     font-size: medium;
   }
+
+  .button a{
+    text-decoration: none;
+    color: white;
+  }
   
   .button:hover {
     background-color: #555;
@@ -85,4 +90,13 @@ h3 a{
 }
 h3 a:active{
     color: red;
+}
+
+img{
+  border-radius: 8px;
+  padding: 40px;
+  display: block;
+}
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
