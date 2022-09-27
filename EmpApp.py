@@ -4,7 +4,8 @@ import os
 import boto3
 from config import *
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+application = Flask(__name__, template_folder='templates',
+                    static_folder='static')
 
 bucket = custombucket
 region = customregion
@@ -21,42 +22,42 @@ output = {}
 table = 'employee'
 
 
-@app.route("/", methods=['GET', 'POST'])
+@application.route("/", methods=['GET', 'POST'])
 def home():
     return render_template('Homepage.html')
 
 # navigate to add emp
 
 
-@app.route("/goaddemp", methods=['GET'])
+@application.route("/goaddemp", methods=['GET'])
 def GoAddEmp():
     return render_template('AddEmp.html')
 
 # navigate to get emp
 
 
-@app.route("/gogetemp", methods=['GET'])
+@application.route("/gogetemp", methods=['GET'])
 def GoGetEmp():
     return render_template('GetEmp.html')
 
 # navigate to update emp
 
 
-@app.route("/goupdateemp", methods=['GET'])
+@application.route("/goupdateemp", methods=['GET'])
 def GoUpdateEmp():
     return render_template('SelectUpdateEmp.html')
 
 # navigate to delete emp
 
 
-@app.route("/godeleteemp", methods=['GET'])
+@application.route("/godeleteemp", methods=['GET'])
 def GoDeleteEmp():
     return render_template('DeleteEmp.html')
 
 # navigate to about us
 
 
-@app.route("/aboutus", methods=['GET'])
+@application.route("/aboutus", methods=['GET'])
 def GoAboutUs():
     return render_template('AboutUs.html')
 
@@ -64,7 +65,7 @@ def GoAboutUs():
 # start about us
 
 
-@app.route("/aboutus", methods=['GET'])
+@application.route("/aboutus", methods=['GET'])
 def about():
     return render_template('AboutUs.html')
 
@@ -72,7 +73,7 @@ def about():
 # go error page
 
 
-@app.route("/error", methods=['GET'])
+@application.route("/error", methods=['GET'])
 def Error():
     return render_template('Error.html')
 
@@ -80,7 +81,7 @@ def Error():
 # start add emp
 
 
-@app.route("/addemp", methods=['POST'])
+@application.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['emp_id']
     first_name = request.form['first_name']
@@ -137,7 +138,7 @@ def AddEmp():
 
 
 # start get emp
-@app.route("/fetchdata", methods=['POST'])
+@application.route("/fetchdata", methods=['POST'])
 def GetEmp():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
@@ -193,7 +194,7 @@ def GetEmp():
 # get update emp id
 
 
-@app.route("/updateolddata", methods=['POST'])
+@application.route("/updateolddata", methods=['POST'])
 def GetUdpEmp():
     emp_id = request.form['emp_id']
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
@@ -279,7 +280,7 @@ def ReadEmp(emp_id):
 # start update emp
 
 
-@app.route("/udpemp", methods=['POST'])
+@application.route("/udpemp", methods=['POST'])
 def UdpEmp():
     new_pri_skill = request.form['pri_skill']
     new_location = request.form['location']
@@ -337,7 +338,7 @@ def UdpEmp():
 
 
 # start delete
-@app.route("/deleteemp", methods=['POST'])
+@application.route("/deleteemp", methods=['POST'])
 def delete():
     # Get user's input from webpage
     emp_id = request.form['emp_id']
@@ -389,4 +390,4 @@ def delete():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    application.run(host='0.0.0.0', port=80, debug=True)
